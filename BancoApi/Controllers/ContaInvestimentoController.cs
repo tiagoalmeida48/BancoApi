@@ -26,7 +26,7 @@ namespace BancoAPI.Controllers
             ContaInvestimentoDAO objConta = new ContaInvestimentoDAO();
             List<Conta> lstConta = objConta.RetornarListaContaInvestimento();
 
-            List<Conta> lstContaWhere = lstConta.Where(c => c.Cod_Conta == CodConta).Take(1).ToList();
+            List<Conta> lstContaWhere = lstConta.Where(c => c.CodConta == CodConta).Take(1).ToList();
 
             Conta conta = lstContaWhere.FirstOrDefault();
 
@@ -45,10 +45,10 @@ namespace BancoAPI.Controllers
         }
 
         [HttpPost]
-        public Conta Details([FromBody] Conta conta)
+        public Conta Post([FromBody] Conta conta)
         {
             ContaInvestimentoDAO contaDao = new();
-            return contaDao.RetornarContaInvestimento(conta.Cod_Conta);
+            return contaDao.CadastrarConta(conta);
         }
 
         [HttpPut]
@@ -56,9 +56,9 @@ namespace BancoAPI.Controllers
         {
             int retorno = 0;
             ContaInvestimentoDAO contaDAO = new();
-            if (conta.Cod_Conta < 1)
+            if (conta.CodConta < 1)
             {
-                retorno = contaDAO.CadastrarConta(conta);
+                contaDAO.CadastrarConta(conta);
             }
             else
             {
@@ -83,7 +83,7 @@ namespace BancoAPI.Controllers
             {
                 ContaInvestimentoDAO contaDAO = new();
                 Conta conta = new();
-                conta.Cod_Conta = codConta;
+                conta.CodConta = codConta;
 
                 retorno = contaDAO.ApagarConta(conta);
                 if (retorno == 1)

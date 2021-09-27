@@ -7,7 +7,7 @@ namespace Model
 {
     public class Conta : IConta
     {
-        public int Cod_Conta { get; set; }
+        public int CodConta { get; set; }
 
         public string Agencia { get; set; }
 
@@ -16,6 +16,7 @@ namespace Model
         public string Codigo_Banco { get; set; }
 
         public Cliente Cliente { get; set; }
+        public int CodCli { get; set; }
 
         public double Saldo_Inicial { get; set; }
 

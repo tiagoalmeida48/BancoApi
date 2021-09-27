@@ -31,7 +31,7 @@ namespace Model
         {
             ContaInvestimento objCtaInvest = new ContaInvestimento();
 
-            objCtaInvest.Cod_Conta = 1;
+            objCtaInvest.CodConta = 1;
 
             ClientePF objCliPF = new ClientePF();
             objCliPF.ID = 1;
@@ -57,7 +57,7 @@ namespace Model
 
             ContaInvestimento objCtaInvest1 = new ContaInvestimento();
 
-            objCtaInvest1.Cod_Conta = 2;
+            objCtaInvest1.CodConta = 2;
 
             ClientePF objCliPF1 = new ClientePF();
             objCliPF1.ID = 2;
@@ -76,7 +76,7 @@ namespace Model
 
             ContaInvestimento objCtaInvest2 = new ContaInvestimento();
 
-            objCtaInvest2.Cod_Conta = 3;
+            objCtaInvest2.CodConta = 3;
 
             ClientePF objCliPF2 = new ClientePF();
             objCliPF2.ID = 3;

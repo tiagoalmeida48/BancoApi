@@ -17,15 +17,9 @@ namespace DAO
             using (SqlConnection conn = new(this.connectionString))
             {
                 StringBuilder sbQuery = new();
-                sbQuery.AppendLine("select cliente.nome, ");
-                sbQuery.AppendLine("conta.agencia, ");
-                sbQuery.AppendLine("conta.numeroConta, ");
-                sbQuery.AppendLine("conta.saldo_inicial, ");
-                sbQuery.AppendLine("conta.saldo_atual ");
+                sbQuery.AppendLine("select * ");
                 sbQuery.AppendLine("from conta ");
-                sbQuery.AppendLine("inner join cliente on ");
-                sbQuery.AppendLine("conta.cod_cli = cliente.cod_cli ");
-                sbQuery.AppendLine("where conta.cod_tipoconta = 2 ");
+//                sbQuery.AppendLine("where cod_tipoconta = 2 ");
                 sbQuery.AppendLine("order by 1");
 
                 SqlCommand objCmd = new(sbQuery.ToString(), conn);
@@ -49,7 +43,7 @@ namespace DAO
 
                         if (sdReader["Cod_Conta"] != null)
                         {
-                            conta.Cod_Conta = int.TryParse(sdReader["Cod_Conta"].ToString(), out iConvert) ? iConvert : 0;
+                            conta.CodConta = int.TryParse(sdReader["Cod_Conta"].ToString(), out iConvert) ? iConvert : 0;
                         }
                         if (sdReader["Agencia"] != null)
                         {
@@ -65,7 +59,7 @@ namespace DAO
                         }
                         if (sdReader["Cod_Cli"] != null)
                         {
-                            conta.Cliente.ID = int.TryParse(sdReader["Cod_Cli"].ToString(), out iConvert) ? iConvert : 0;
+                            conta.CodCli = int.TryParse(sdReader["Cod_Cli"].ToString(), out iConvert) ? iConvert : 0;
                         }
                         if (sdReader["Saldo_Inicial"] != null)
                         {
@@ -113,11 +107,11 @@ namespace DAO
         {
             List<Conta> lstConta = RetornarListaContaInvestimento();
 
-            Conta conta = lstConta.Where(c => c.Cod_Conta == CodConta).FirstOrDefault();
+            Conta conta = lstConta.Where(c => c.CodConta == CodConta).FirstOrDefault();
             return conta;
         }
 
-        public int CadastrarConta(Conta conta)
+        public Conta CadastrarConta(Conta conta)
         {
             SqlConnection conn = new(this.connectionString);
 
@@ -148,7 +142,7 @@ namespace DAO
             cmd.Parameters.AddWithValue("@Agencia", conta.Agencia);
             cmd.Parameters.AddWithValue("@NumeroConta", conta.NumeroConta);
             cmd.Parameters.AddWithValue("@Codigo_Banco", conta.Codigo_Banco);
-            cmd.Parameters.AddWithValue("@Cod_Cli", conta.Cliente);
+            cmd.Parameters.AddWithValue("@Cod_Cli", conta.CodCli);
             cmd.Parameters.AddWithValue("@Saldo_Inicial", conta.Saldo_Inicial);
             cmd.Parameters.AddWithValue("@Saldo_Atual", conta.Saldo_Atual);
             cmd.Parameters.AddWithValue("@Cod_tipoConta", conta.Cod_TipoConta);
@@ -178,7 +172,7 @@ namespace DAO
                     conn.Close();
                 }
             }
-            return retorno;
+            return conta;
         }
 
         public int AtualizarConta(Conta conta)
@@ -202,7 +196,7 @@ namespace DAO
             SqlCommand cmd = new SqlCommand(sbComando.ToString(), conn);
             cmd.CommandType = CommandType.Text;
 
-            cmd.Parameters.AddWithValue("@Cod_Conta", conta.Cod_Conta);
+            cmd.Parameters.AddWithValue("@Cod_Conta", conta.CodConta);
             cmd.Parameters.AddWithValue("@Agencia", conta.Agencia);
             cmd.Parameters.AddWithValue("@NumeroConta", conta.NumeroConta);
             cmd.Parameters.AddWithValue("@Codigo_Banco", conta.Codigo_Banco);
@@ -252,7 +246,7 @@ namespace DAO
             SqlCommand cmd = new SqlCommand(sbComando.ToString(), conn);
             cmd.CommandType = CommandType.Text;
 
-            cmd.Parameters.AddWithValue("@Cod_Conta", conta.Cod_Conta);
+            cmd.Parameters.AddWithValue("@Cod_Conta", conta.CodConta);
             cmd.Parameters.AddWithValue("@Cod_Cli", conta.Cliente.ID);
 
             try
